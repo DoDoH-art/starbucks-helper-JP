@@ -178,8 +178,31 @@ function initSuggestions() {
     const tags = document.querySelectorAll(".suggestion-tag");
     tags.forEach(tag => {
         tag.addEventListener("click", () => {
-            drinkInput.value = tag.getAttribute("data-zh");
-            builderState.drinkName = tag.getAttribute("data-zh");
+            const zhName = tag.getAttribute("data-zh");
+            const jaName = tag.getAttribute("data-ja");
+            drinkInput.value = zhName;
+            builderState.drinkName = zhName;
+            
+            // Auto-detect defaults for special drinks
+            const isFrappuccino = zhName.includes("星冰樂") || jaName.includes("フラペチーノ");
+            if (isFrappuccino) {
+                // 星冰樂必須是冰的
+                builderState.temp = "Iced";
+                document.getElementById("temp-iced").checked = true;
+                
+                // 星冰樂預設會有鮮奶油，若原本無則更換為通常量
+                if (builderState.whip === "None") {
+                    builderState.whip = "Extra";
+                    document.getElementById("whip-extra").checked = true;
+                }
+            } else if (zhName.includes("咖啡") || zhName.includes("拿鐵") || zhName.includes("美式")) {
+                // 常規咖啡/拿鐵預設去奶油
+                if (builderState.whip === "Add" || builderState.whip === "Extra") {
+                    builderState.whip = "None";
+                    document.getElementById("whip-none").checked = true;
+                }
+            }
+            
             updateSticker();
             showToast(`已選擇：${tag.textContent}`, "☕");
         });
@@ -820,6 +843,203 @@ function closeBaristaModal() {
     document.body.style.overflow = ""; // Re-enable scrolling
 }
 
+// --- Apply Customization Directly From Card Click ---
+function applyCustomizationFromCard(category, item) {
+    let applied = false;
+    let labelText = item.zh;
+    
+    if (category === "milk") {
+        const mapping = {
+            "通常ミルク": "Standard",
+            "低脂肪タイプ": "LowFat",
+            "無脂肪乳": "NonFat",
+            "豆乳に変更": "Soy",
+            "アーモンドミルクに変更": "Almond",
+            "オーツミルクに変更": "Oat",
+            "ブレベミルクに変更": "Breve"
+        };
+        const val = mapping[item.ja];
+        if (val) {
+            builderState.milk = val;
+            document.getElementById(`milk-${val.toLowerCase()}`).checked = true;
+            applied = true;
+        }
+    } else if (category === "ice") {
+        if (item.ja === "ホット") {
+            builderState.temp = "Hot";
+            document.getElementById("temp-hot").checked = true;
+            applied = true;
+        } else if (item.ja === "アイス") {
+            builderState.temp = "Iced";
+            document.getElementById("temp-iced").checked = true;
+            applied = true;
+        } else if (item.ja === "通常の氷") {
+            builderState.ice = "Regular";
+            document.getElementById("ice-regular").checked = true;
+            applied = true;
+        } else if (item.ja === "氷少なめ") {
+            builderState.ice = "Less";
+            document.getElementById("ice-less").checked = true;
+            iceMilkCompensateWrapper.style.display = "block";
+            applied = true;
+        } else if (item.ja === "氷なし") {
+            builderState.ice = "None";
+            document.getElementById("ice-none").checked = true;
+            iceMilkCompensateWrapper.style.display = "block";
+            applied = true;
+        } else if (item.ja === "氷多め") {
+            builderState.ice = "Extra";
+            document.getElementById("ice-extra").checked = true;
+            applied = true;
+        } else if (item.ja === "ミルク多め") {
+            builderState.iceMilk = "ExtraMilk";
+            document.getElementById("ice-milk-yes").checked = true;
+            // 如果冰塊量為正常，為了讓加奶合理，強制改為少冰
+            if (builderState.ice === "Regular" || builderState.ice === "Extra") {
+                builderState.ice = "Less";
+                document.getElementById("ice-less").checked = true;
+                iceMilkCompensateWrapper.style.display = "block";
+            }
+            applied = true;
+        }
+    } else if (category === "syrup") {
+        const typeMapping = {
+            "キャラメルシロップ": "Caramel",
+            "バニラシロップ": "Vanilla",
+            "モカシロップ": "Mocha",
+            "ホワイトモカシロップ": "WhiteMocha",
+            "チャイシロップ": "Chai",
+            "クラシックシロップ": "Classic"
+        };
+        const val = typeMapping[item.ja];
+        if (val) {
+            builderState.syrupType = val;
+            document.getElementById("syrupType").value = val;
+            syrupActionSelect.disabled = false;
+            syrupAmountWrapper.style.display = "block";
+            applied = true;
+        } else if (item.ja === "シロップなし") {
+            builderState.syrupType = "None";
+            document.getElementById("syrupType").value = "None";
+            syrupActionSelect.disabled = true;
+            syrupAmountWrapper.style.display = "none";
+            applied = true;
+        } else if (item.ja === "シロップ多め") {
+            builderState.syrupAmount = "Extra";
+            document.getElementById("syrup-amt-extra").checked = true;
+            applied = true;
+        } else if (item.ja === "シロップ少なめ") {
+            builderState.syrupAmount = "Less";
+            document.getElementById("syrup-amt-less").checked = true;
+            applied = true;
+        }
+    } else if (category === "whip") {
+        if (item.ja === "ホイップクリーム追加") {
+            builderState.whip = "Add";
+            document.getElementById("whip-add").checked = true;
+            applied = true;
+        } else if (item.ja === "ホイップ多め") {
+            builderState.whip = "Extra";
+            document.getElementById("whip-extra").checked = true;
+            applied = true;
+        } else if (item.ja === "ホイップ少なめ") {
+            builderState.whip = "Less";
+            document.getElementById("whip-less").checked = true;
+            applied = true;
+        } else if (item.ja === "ホイップなし") {
+            builderState.whip = "None";
+            document.getElementById("whip-none").checked = true;
+            applied = true;
+        } else if (item.ja === "キャラメルソース追加") {
+            builderState.drizzleCaramel = true;
+            document.getElementById("driz-caramel").checked = true;
+            drizCaramelAmtWrapper.style.display = "flex";
+            applied = true;
+        } else if (item.ja === "チョコレートソース追加") {
+            builderState.drizzleChocolate = true;
+            document.getElementById("driz-chocolate").checked = true;
+            drizChocolateAmtWrapper.style.display = "flex";
+            applied = true;
+        } else if (item.ja === "ソース多め") {
+            let activeDrizzle = false;
+            if (builderState.drizzleCaramel) {
+                builderState.drizCaramelAmt = "Extra";
+                document.getElementById("dc-extra").checked = true;
+                activeDrizzle = true;
+            }
+            if (builderState.drizzleChocolate) {
+                builderState.drizChocAmt = "Extra";
+                document.getElementById("dh-extra").checked = true;
+                activeDrizzle = true;
+            }
+            if (!activeDrizzle) {
+                // 若原本無淋醬，預設追加焦糖醬多
+                builderState.drizzleCaramel = true;
+                document.getElementById("driz-caramel").checked = true;
+                drizCaramelAmtWrapper.style.display = "flex";
+                builderState.drizCaramelAmt = "Extra";
+                document.getElementById("dc-extra").checked = true;
+            }
+            applied = true;
+        }
+    } else if (category === "powder") {
+        if (item.ja === "チョコチップ追加") {
+            builderState.chocChips = "Add";
+            document.getElementById("cc-add").checked = true;
+            applied = true;
+        } else if (item.ja === "チョコチップ多め") {
+            builderState.chocChips = "Extra";
+            document.getElementById("cc-extra").checked = true;
+            applied = true;
+        } else if (item.ja === "抹茶パウダー多め") {
+            builderState.matchaPowder = "Extra";
+            document.getElementById("mp-extra").checked = true;
+            applied = true;
+        } else if (item.ja === "ハチミツ追加") {
+            builderState.honey = true;
+            document.getElementById("add-honey").checked = true;
+            applied = true;
+        } else if (item.ja === "シナモンパウダー追加") {
+            builderState.cinnamon = true;
+            document.getElementById("add-cinnamon").checked = true;
+            applied = true;
+        } else if (item.ja === "ココアパウダー追加") {
+            builderState.cocoa = true;
+            document.getElementById("add-cocoa").checked = true;
+            applied = true;
+        } else if (item.ja === "デカフェ変更") {
+            builderState.decaf = true;
+            document.getElementById("esp-decaf").checked = true;
+            applied = true;
+        } else if (item.ja === "リストレット") {
+            builderState.ristretto = true;
+            document.getElementById("esp-ristretto").checked = true;
+            applied = true;
+        } else if (item.ja === "ワンショット追加") {
+            builderState.shot = "Add1";
+            document.getElementById("shot-add1").checked = true;
+            applied = true;
+        } else if (item.ja === "ツーショット追加") {
+            builderState.shot = "Add2";
+            document.getElementById("shot-add2").checked = true;
+            applied = true;
+        }
+    } else if (category === "sizes") {
+        const mapping = { "ショートサイズ": "Short", "トールサイズ": "Tall", "グランデサイズ": "Grande", "ベンティサイズ": "Venti" };
+        const val = mapping[item.ja];
+        if (val) {
+            builderState.size = val;
+            document.getElementById(`size-${val.toLowerCase()}`).checked = true;
+            applied = true;
+        }
+    }
+    
+    if (applied) {
+        updateSticker();
+        showToast(`已套用：${labelText}`, "✅");
+    }
+}
+
 // --- Render Category Cheat Sheets ---
 function renderCheatSheets() {
     const categories = ["milk", "ice", "syrup", "whip", "powder", "sizes"];
@@ -848,16 +1068,18 @@ function renderCheatSheets() {
                 </div>
                 <div class="cheat-card-bottom">
                     <p class="cc-desc">${item.desc}</p>
-                    <span class="cc-copy-indicator" title="複製日文">📋</span>
+                    <span class="cc-copy-indicator" title="點擊套用客製且複製日文">📋</span>
                 </div>
             `;
             
-            // Add copy functionality
+            // Add copy & apply functionality
             card.addEventListener("click", () => {
                 // Get copyable text (just the Japanese term)
                 const copyText = item.ja.replace("に変更", "").replace("追加", "").trim();
                 copyToClipboard(copyText);
-                showToast(`已複製單字：${copyText}`, "📋");
+                
+                // Directly apply to the builder
+                applyCustomizationFromCard(cat, item);
                 
                 // Micro feedback animation
                 card.style.transform = "scale(0.97)";
