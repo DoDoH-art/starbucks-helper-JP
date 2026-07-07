@@ -715,6 +715,7 @@ function updateSticker() {
                 customRomajiPhrases.push("chokochippu tsuika, chokochippu san-bai");
                 extraFee += 55;
             }
+        }
     }
 
     // Tea Latte Specials Customization
