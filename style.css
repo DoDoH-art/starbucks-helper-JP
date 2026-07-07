@@ -2,24 +2,24 @@
 
 /* --- Design Variables --- */
 :root {
-    --sb-green: #00a85c; /* Bright forest green in dark mode */
-    --sb-green-light: #16db83;
+    --sb-green: #00704A; /* Starbucks Brand Green */
+    --sb-green-light: #008248;
     --sb-green-dark: #ffffff; /* Page headers / main titles */
-    --sb-green-alpha: rgba(0, 168, 92, 0.15);
-    --sb-gold: #cba258;
+    --sb-green-alpha: rgba(0, 112, 74, 0.2);
+    --sb-gold: #e6b85c; /* Highly visible warm gold */
     --sb-gold-dark: #dfc28c;
-    --sb-gold-light: rgba(203, 162, 88, 0.15);
-    --bg-latte: #0a0d0c; /* Deep charcoal/obsidian black */
-    --bg-latte-dark: #121816; /* Dark gray-green */
-    --bg-white: #161e1c; /* Dark card background */
-    --text-main: #e2e8e5; /* Primary light text */
-    --text-muted: #9da6a1; /* Secondary text */
-    --text-light: #6a736f; /* Muted text */
+    --sb-gold-light: rgba(230, 184, 92, 0.2);
+    --bg-latte: #0b1311; /* Deep forest black background */
+    --bg-latte-dark: #121f1b; /* Dark gray-green backdrop */
+    --bg-white: #1b322b; /* Starbucks app corporate deep green for cards */
+    --text-main: #ffffff; /* Stark white for maximum legibility */
+    --text-muted: #cfe8df; /* Minty light green-gray for secondary text */
+    --text-light: #94b0a7; /* Readable muted green for subtexts */
     
     /* Thermal Sticker Theme (keeps light paper for scan readability and realism) */
     --sticker-bg: #FAF9F6;
-    --sticker-border: #e3dec9;
-    --sticker-font-color: #222222;
+    --sticker-border: #d4cfb8;
+    --sticker-font-color: #111111;
 
     /* Spacing & Borders */
     --border-radius-lg: 20px;
@@ -28,10 +28,10 @@
     --border-radius-round: 100px;
     
     /* Shadows (softer and darker for dark mode) */
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.5);
-    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.25);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -632,9 +632,9 @@ ul, ol {
     gap: 16px;
     margin-top: 14px;
     padding: 16px;
-    background-color: rgba(0, 0, 0, 0.015);
+    background-color: rgba(0, 0, 0, 0.25);
     border-radius: var(--border-radius-sm);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     max-height: 380px;
     overflow-y: auto;
 }
@@ -709,39 +709,39 @@ ul, ol {
 /* Checked state */
 .radio-pill:checked + .pill-label,
 .checkbox-pill:checked + .pill-label {
-    border-color: var(--sb-green);
-    background-color: var(--sb-green-alpha);
-    box-shadow: 0 0 0 1px var(--sb-green);
+    border-color: var(--sb-green-light);
+    background-color: var(--sb-green);
+    box-shadow: 0 4px 12px rgba(0, 168, 92, 0.25);
 }
 
 .radio-pill:checked + .pill-label .label-main,
 .checkbox-pill:checked + .pill-label .label-main {
-    color: var(--sb-green-dark);
+    color: #ffffff !important;
 }
 
 .radio-pill:checked + .pill-label .label-sub,
 .checkbox-pill:checked + .pill-label .label-sub {
-    color: var(--sb-green);
+    color: #d4f3e6 !important;
 }
 
 /* Hot / Iced themes */
-.hot-theme:hover { border-color: #d9534f; }
+.hot-theme:hover { border-color: #ff6b66; }
 .radio-pill:checked + .hot-theme {
-    border-color: #d9534f;
-    background-color: rgba(217, 83, 79, 0.08);
-    box-shadow: 0 0 0 1px #d9534f;
+    border-color: #ff6b66;
+    background-color: #e05c58;
+    box-shadow: 0 4px 12px rgba(224, 92, 88, 0.3);
 }
-.radio-pill:checked + .hot-theme .label-main { color: #c9302c; }
-.radio-pill:checked + .hot-theme .label-sub { color: #d9534f; }
+.radio-pill:checked + .hot-theme .label-main { color: #ffffff !important; }
+.radio-pill:checked + .hot-theme .label-sub { color: #ffe5e3 !important; }
 
-.iced-theme:hover { border-color: #337ab7; }
+.iced-theme:hover { border-color: #4da3ff; }
 .radio-pill:checked + .iced-theme {
-    border-color: #337ab7;
-    background-color: rgba(51, 122, 183, 0.08);
-    box-shadow: 0 0 0 1px #337ab7;
+    border-color: #4da3ff;
+    background-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
-.radio-pill:checked + .iced-theme .label-main { color: #286090; }
-.radio-pill:checked + .iced-theme .label-sub { color: #337ab7; }
+.radio-pill:checked + .iced-theme .label-main { color: #ffffff !important; }
+.radio-pill:checked + .iced-theme .label-sub { color: #eff6ff !important; }
 
 /* Small version */
 .pill-label.small-pill {
