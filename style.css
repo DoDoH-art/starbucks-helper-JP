@@ -625,6 +625,35 @@ ul, ol {
     color: var(--bg-white);
 }
 
+/* Category Suggestions styles */
+.suggestions-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 14px;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.015);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.drink-category-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.drink-category-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--sb-green-dark);
+    border-left: 2.5px solid var(--sb-gold);
+    padding-left: 6px;
+    line-height: 1;
+}
+
 /* Pill Option grids */
 .option-grid {
     display: grid;

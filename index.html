@@ -120,13 +120,49 @@
                     <label class="control-label">飲品基本名稱 (可輸入中文、英文或直接日文)</label>
                     <div class="input-with-suggestions">
                         <input type="text" id="drinkInput" class="form-input" placeholder="例如：拿鐵 / Latte / カフェラテ" value="拿鐵">
-                        <div class="suggestions-tags">
-                            <span class="suggestion-tag" data-zh="拿鐵" data-ja="カフェ ラテ" data-en="Cafe Latte">拿鐵 (ラテ)</span>
-                            <span class="suggestion-tag" data-zh="美式咖啡" data-ja="アメリカーノ" data-en="Americano">美式 (アメリカーノ)</span>
-                            <span class="suggestion-tag" data-zh="焦糖瑪奇朵" data-ja="キャラメル マキアート" data-en="Caramel Macchiato">焦糖瑪奇朵</span>
-                            <span class="suggestion-tag" data-zh="抹茶奶油星冰樂" data-ja="抹茶 クリーム フラペチーノ" data-en="Matcha Cream Frappuccino">抹茶星冰樂</span>
-                            <span class="suggestion-tag" data-zh="每日精選咖啡" data-ja="ドリップ コーヒー" data-en="Drip Coffee">每日精選</span>
-                            <span class="suggestion-tag" data-zh="紅茶拿鐵" data-ja="ティー ラテ" data-en="Tea Latte">紅茶拿鐵</span>
+                        <div class="suggestions-categories">
+                            <div class="drink-category-group">
+                                <span class="drink-category-title">☕ 經典咖啡與濃縮</span>
+                                <div class="suggestions-tags">
+                                    <span class="suggestion-tag" data-zh="星巴克拿鐵" data-ja="スターバックス ラテ" data-en="Starbucks Latte">星巴克拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="美式咖啡" data-ja="アメリカーノ" data-en="Americano">美式咖啡</span>
+                                    <span class="suggestion-tag" data-zh="焦糖瑪奇朵" data-ja="キャラメル マキアート" data-en="Caramel Macchiato">焦糖瑪奇朵</span>
+                                    <span class="suggestion-tag" data-zh="摩卡" data-ja="カフェ モカ" data-en="Caffè Mocha">摩卡咖啡</span>
+                                    <span class="suggestion-tag" data-zh="白摩卡" data-ja="ホワイト モカ" data-en="White Mocha">白摩卡</span>
+                                    <span class="suggestion-tag" data-zh="卡布奇諾" data-ja="カプチーノ" data-en="Cappuccino">卡布奇諾</span>
+                                    <span class="suggestion-tag" data-zh="每日精選" data-ja="ドリップ コーヒー" data-en="Drip Coffee">每日精選</span>
+                                    <span class="suggestion-tag" data-zh="冷萃咖啡" data-ja="コールドブリュー コーヒー" data-en="Cold Brew Coffee">冷萃咖啡</span>
+                                </div>
+                            </div>
+                            <div class="drink-category-group">
+                                <span class="drink-category-title">🍵 日本茶與茶拿鐵</span>
+                                <div class="suggestions-tags">
+                                    <span class="suggestion-tag" data-zh="紅茶拿鐵" data-ja="イングリッシュ ブレックファスト ティー ラテ" data-en="English Breakfast Tea Latte">英式早餐茶拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="抹茶拿鐵" data-ja="抹茶 ティー ラテ" data-en="Matcha Tea Latte">抹茶拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="焙茶拿鐵" data-ja="ほうじ茶 ティー ラテ" data-en="Hojicha Tea Latte">焙茶拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="香料茶拿鐵" data-ja="チャイ ティー ラテ" data-en="Chai Tea Latte">香料茶拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="洋甘菊茶拿鐵" data-ja="カモミール ティー ラテ" data-en="Chamomile Tea Latte">洋甘菊茶拿鐵</span>
+                                    <span class="suggestion-tag" data-zh="伯爵茶拿鐵" data-ja="アール グレイ ティー ラテ" data-en="Earl Grey Tea Latte">伯爵茶拿鐵</span>
+                                </div>
+                            </div>
+                            <div class="drink-category-group">
+                                <span class="drink-category-title">🍧 人氣星冰樂</span>
+                                <div class="suggestions-tags">
+                                    <span class="suggestion-tag" data-zh="抹茶星冰樂" data-ja="抹茶 クリーム フラペチーノ" data-en="Matcha Cream Frappuccino">抹茶星冰樂</span>
+                                    <span class="suggestion-tag" data-zh="焦糖星冰樂" data-ja="キャラメル フラペチーノ" data-en="Caramel Frappuccino">焦糖星冰樂</span>
+                                    <span class="suggestion-tag" data-zh="巧克力星冰樂" data-ja="ダーク モカ チップ クリーム フラペチーノ" data-en="Dark Mocha Chip Cream Frappuccino">巧克力星冰樂</span>
+                                    <span class="suggestion-tag" data-zh="可可碎片星冰樂" data-ja="ダーク モカ チップ フラペチーノ" data-en="Dark Mocha Chip Frappuccino">可可碎片星冰樂</span>
+                                    <span class="suggestion-tag" data-zh="香草星冰樂" data-ja="バニラ クリーム フラペチーノ" data-en="Vanilla Cream Frappuccino">香草奶油星冰樂</span>
+                                    <span class="suggestion-tag" data-zh="阿芙佳朵星冰樂" data-ja="エスプレッソ アフォガート フラペチーノ" data-en="Espresso Affogato Frappuccino">阿芙佳朵星冰樂</span>
+                                </div>
+                            </div>
+                            <div class="drink-category-group">
+                                <span class="drink-category-title">🍫 其他無咖啡因</span>
+                                <div class="suggestions-tags">
+                                    <span class="suggestion-tag" data-zh="可可" data-ja="ココア" data-en="Cocoa">熱可可</span>
+                                    <span class="suggestion-tag" data-zh="焦糖奶油乳" data-ja="キャラメル クリーム" data-en="Caramel Cream">焦糖奶油乳</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

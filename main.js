@@ -4,6 +4,7 @@
 const DRINK_DICTIONARY = {
     "拿鐵": { ja: "カフェ ラテ", en: "Cafe Latte" },
     "拿鐵咖啡": { ja: "カフェ ラテ", en: "Cafe Latte" },
+    "星巴克拿鐵": { ja: "スターバックス ラテ", en: "Starbucks Latte" },
     "焦糖拿鐵": { ja: "キャラメル ラテ", en: "Caramel Latte" },
     "香草拿鐵": { ja: "バニラ ラテ", en: "Vanilla Latte" },
     "燕麥奶拿鐵": { ja: "オーツミルク ラテ", en: "Oat Milk Latte" },
@@ -18,17 +19,25 @@ const DRINK_DICTIONARY = {
     "每日精選": { ja: "ドリップ コーヒー", en: "Drip Coffee" },
     "每日精選咖啡": { ja: "ドリップ コーヒー", en: "Drip Coffee" },
     "冷萃咖啡": { ja: "コールドブリュー コーヒー", en: "Cold Brew Coffee" },
-    "紅茶拿鐵": { ja: "ティー ラテ", en: "Tea Latte" },
+    "紅茶拿鐵": { ja: "イングリッシュ ブレックファスト ティー ラテ", en: "English Breakfast Tea Latte" },
+    "英式早餐茶拿鐵": { ja: "イングリッシュ ブレックファスト ティー ラテ", en: "English Breakfast Tea Latte" },
     "抹茶拿鐵": { ja: "抹茶 ティー ラテ", en: "Matcha Tea Latte" },
+    "焙茶拿鐵": { ja: "ほうじ茶 ティー ラテ", en: "Hojicha Tea Latte" },
+    "香料茶拿鐵": { ja: "チャイ ティー ラテ", en: "Chai Tea Latte" },
+    "洋甘菊茶拿鐵": { ja: "カモミール ティー ラテ", en: "Chamomile Tea Latte" },
+    "伯爵茶拿鐵": { ja: "アール グレイ ティー ラテ", en: "Earl Grey Tea Latte" },
     "抹茶星冰樂": { ja: "抹茶 クリーム フラペチーノ", en: "Matcha Cream Frappuccino" },
     "抹茶奶油星冰樂": { ja: "抹茶 クリーム フラペチーノ", en: "Matcha Cream Frappuccino" },
     "焦糖星冰樂": { ja: "キャラメル フラペチーノ", en: "Caramel Frappuccino" },
     "黑摩卡可可碎片星冰樂": { ja: "ダーク モカ チップ フラペチーノ", en: "Dark Mocha Chip Frappuccino" },
+    "可可碎片星冰樂": { ja: "ダーク モカ チップ フラペチーノ", en: "Dark Mocha Chip Frappuccino" },
     "巧克力星冰樂": { ja: "ダーク モカ チップ クリーム フラペチーノ", en: "Dark Mocha Chip Cream Frappuccino" },
     "香草星冰樂": { ja: "バニラ クリーム フラペチーノ", en: "Vanilla Cream Frappuccino" },
+    "阿芙佳朵星冰樂": { ja: "エスプレッソ アフォガート フラペチーノ", en: "Espresso Affogato Frappuccino" },
     "芒果百香果星冰樂": { ja: "マンゴー パッション ティー フラペチーノ", en: "Mango Passion Tea Frappuccino" },
     "巧克力熱可可": { ja: "ココア", en: "Hot Chocolate (Cocoa)" },
-    "可可": { ja: "ココア", en: "Hot Chocolate (Cocoa)" }
+    "可可": { ja: "ココア", en: "Hot Chocolate (Cocoa)" },
+    "焦糖奶油乳": { ja: "キャラメル クリーム", en: "Caramel Cream" }
 };
 
 // --- Cheat Sheets Database ---
