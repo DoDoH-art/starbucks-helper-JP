@@ -1026,12 +1026,13 @@ ul, ol {
     font-family: 'Outfit', sans-serif;
     font-size: 0.65rem;
     font-weight: 800;
-    color: var(--text-light);
+    color: #666666;
 }
 
 .sticker-order-num {
     font-size: 0.85rem;
     font-weight: 700;
+    color: #444444;
 }
 
 .sticker-drink-header {
@@ -1045,14 +1046,14 @@ ul, ol {
     font-family: 'Noto Sans TC', sans-serif;
     font-size: 1.4rem;
     font-weight: 900;
-    color: var(--sb-green-dark);
+    color: #00704A; /* Starbucks Brand Green */
 }
 
 .sticker-drink-name-ja {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text-main);
+    color: #222222;
 }
 
 .sticker-divider {
@@ -1068,6 +1069,7 @@ ul, ol {
     font-weight: 700;
     font-size: 0.9rem;
     padding-left: 4px;
+    color: #222222;
 }
 
 .sticker-items-list li {
@@ -1080,12 +1082,12 @@ ul, ol {
     position: absolute;
     left: 0;
     top: -1px;
-    color: var(--text-light);
+    color: #666666;
 }
 
 /* Sentence block styling */
 .sticker-sentence-block {
-    background-color: var(--bg-latte);
+    background-color: #f3ede2; /* Warm receipt sand cream */
     padding: 16px;
     border-radius: 8px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -1095,7 +1097,7 @@ ul, ol {
 .sentence-title {
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--text-muted);
+    color: #555555;
     display: block;
     margin-bottom: 6px;
 }
@@ -1103,14 +1105,14 @@ ul, ol {
 .sentence-text {
     font-size: 1.05rem;
     font-weight: 800;
-    color: var(--sb-green-dark);
+    color: #111111;
     line-height: 1.4;
     word-break: break-all;
 }
 
 .sentence-romaji {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: #555555;
     font-style: italic;
     margin-top: 6px;
     line-height: 1.3;
