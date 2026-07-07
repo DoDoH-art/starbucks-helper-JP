@@ -2,36 +2,36 @@
 
 /* --- Design Variables --- */
 :root {
-    --sb-green: #00704A;
-    --sb-green-light: #008248;
-    --sb-green-dark: #1e3932;
-    --sb-green-alpha: rgba(0, 112, 74, 0.1);
+    --sb-green: #00a85c; /* Bright forest green in dark mode */
+    --sb-green-light: #16db83;
+    --sb-green-dark: #ffffff; /* Page headers / main titles */
+    --sb-green-alpha: rgba(0, 168, 92, 0.15);
     --sb-gold: #cba258;
-    --sb-gold-dark: #b8946c;
-    --sb-gold-light: #f4ebd9;
-    --bg-latte: #f9f8f6;
-    --bg-latte-dark: #eee9e0;
-    --bg-white: #ffffff;
-    --text-main: #2d2926;
-    --text-muted: #6b6661;
-    --text-light: #9e978e;
+    --sb-gold-dark: #dfc28c;
+    --sb-gold-light: rgba(203, 162, 88, 0.15);
+    --bg-latte: #0a0d0c; /* Deep charcoal/obsidian black */
+    --bg-latte-dark: #121816; /* Dark gray-green */
+    --bg-white: #161e1c; /* Dark card background */
+    --text-main: #e2e8e5; /* Primary light text */
+    --text-muted: #9da6a1; /* Secondary text */
+    --text-light: #6a736f; /* Muted text */
     
-    /* Thermal Sticker Theme */
-    --sticker-bg: #fefdfb;
+    /* Thermal Sticker Theme (keeps light paper for scan readability and realism) */
+    --sticker-bg: #FAF9F6;
     --sticker-border: #e3dec9;
-    --sticker-font-color: #2b2b2b;
+    --sticker-font-color: #222222;
 
     /* Spacing & Borders */
-    --border-radius-lg: 24px;
-    --border-radius-md: 16px;
-    --border-radius-sm: 10px;
+    --border-radius-lg: 20px;
+    --border-radius-md: 14px;
+    --border-radius-sm: 8px;
     --border-radius-round: 100px;
     
-    /* Shadows */
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.12);
-    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    /* Shadows (softer and darker for dark mode) */
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.5);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -147,7 +147,7 @@ ul, ol {
 /* Glassmorphism Card base */
 .card-glass {
     background: var(--bg-white);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     transition: var(--transition-smooth);
@@ -156,7 +156,7 @@ ul, ol {
 /* Button systems */
 .btn-primary {
     background-color: var(--sb-green);
-    color: var(--bg-white);
+    color: #ffffff;
     padding: 14px 28px;
     font-weight: 600;
     font-size: 1rem;
@@ -227,10 +227,10 @@ ul, ol {
 .main-header {
     position: sticky;
     top: 0;
-    background: rgba(249, 248, 246, 0.85);
+    background: rgba(10, 13, 12, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 100;
     transition: var(--transition-smooth);
 }
@@ -677,7 +677,7 @@ ul, ol {
     align-items: center;
     padding: 12px 14px;
     border-radius: var(--border-radius-sm);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     background-color: var(--bg-white);
     cursor: pointer;
     text-align: center;
@@ -865,7 +865,7 @@ ul, ol {
 
 .nested-amount input:checked + label {
     background-color: var(--sb-green);
-    color: var(--bg-white);
+    color: #ffffff;
 }
 
 /* Custom Checkbox list */
@@ -881,7 +881,7 @@ ul, ol {
     position: relative;
     padding: 12px 14px 12px 42px;
     border-radius: var(--border-radius-sm);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     background-color: var(--bg-white);
     cursor: pointer;
     transition: var(--transition-fast);
@@ -1180,7 +1180,7 @@ ul, ol {
 
 .tab-btn {
     background-color: var(--bg-white);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     color: var(--text-muted);
     font-weight: 700;
     font-size: 0.95rem;
@@ -1199,7 +1199,7 @@ ul, ol {
 
 .tab-btn.active {
     background-color: var(--sb-green);
-    color: var(--bg-white);
+    color: #ffffff;
     border-color: var(--sb-green);
     box-shadow: 0 4px 12px rgba(0, 112, 74, 0.2);
 }
@@ -1296,7 +1296,7 @@ ul, ol {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     padding-top: 12px;
     margin-top: 12px;
 }

@@ -121,7 +121,10 @@ let builderState = {
     honey: false,
     cinnamon: false,
     cocoa: false,
-    chips: false,
+    matchaPowder: "Regular",
+    chocChips: "None",
+    allMilk: false,
+    teaBag: false,
     noteNolid: false,
     noteSleeve: false,
     noteTogo: true
@@ -282,7 +285,10 @@ function initEventListeners() {
     setupCheckboxListener("add-honey", "honey");
     setupCheckboxListener("add-cinnamon", "cinnamon");
     setupCheckboxListener("add-cocoa", "cocoa");
-    setupCheckboxListener("add-chips", "chips");
+    setupRadioListener("matchaPowder");
+    setupRadioListener("chocChips");
+    setupCheckboxListener("tl-allmilk", "allMilk");
+    setupCheckboxListener("tl-teabag", "teaBag");
 
     // Cheat Sheet Tabs
     document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -360,7 +366,10 @@ function resetBuilder() {
         honey: false,
         cinnamon: false,
         cocoa: false,
-        chips: false,
+        matchaPowder: "Regular",
+        chocChips: "None",
+        allMilk: false,
+        teaBag: false,
         noteNolid: false,
         noteSleeve: false,
         noteTogo: true
@@ -386,7 +395,10 @@ function resetBuilder() {
     document.getElementById("add-honey").checked = false;
     document.getElementById("add-cinnamon").checked = false;
     document.getElementById("add-cocoa").checked = false;
-    document.getElementById("add-chips").checked = false;
+    document.getElementById("mp-regular").checked = true;
+    document.getElementById("cc-none").checked = true;
+    document.getElementById("tl-allmilk").checked = false;
+    document.getElementById("tl-teabag").checked = false;
     document.getElementById("note-nolid").checked = false;
     document.getElementById("note-sleeve").checked = false;
     document.getElementById("note-togo").checked = true;
@@ -622,10 +634,76 @@ function updateSticker() {
         customSentencePhrases.push("ココアパウダー追加");
         customRomajiPhrases.push("kokoa paudā tsuika");
     }
-    if (builderState.chips) {
-        customBulletItems.push("巧克力碎追加");
-        customSentencePhrases.push("チョコチップ追加");
-        customRomajiPhrases.push("chokochippu tsuika");
+    // Matcha Powder Multipliers
+    if (builderState.matchaPowder !== "Regular") {
+        const mp = builderState.matchaPowder;
+        if (mp === "Extra") {
+            customBulletItems.push("抹茶粉多め (2倍 - 免費)");
+            customSentencePhrases.push("抹茶パウダー多め");
+            customRomajiPhrases.push("matcha paudā ōme");
+        } else if (mp === "3x") {
+            customBulletItems.push("抹茶粉3倍 (免費)");
+            customSentencePhrases.push("抹茶パウダー3倍");
+            customRomajiPhrases.push("matcha paudā san-bai");
+        } else if (mp === "4x") {
+            customBulletItems.push("抹茶粉4倍 (免費)");
+            customSentencePhrases.push("抹茶パウダー4倍");
+            customRomajiPhrases.push("matcha paudā yon-bai");
+        }
+    }
+
+    // Chocolate Chips Multipliers
+    if (builderState.chocChips !== "None") {
+        const cc = builderState.chocChips;
+        const hasChips = drinkObj.ja.includes("チップ") || 
+                         builderState.drinkName.includes("碎片") || 
+                         builderState.drinkName.includes("巧克力星冰樂");
+
+        if (hasChips) {
+            // Free customization on drinks that already have chips
+            if (cc === "Extra") {
+                customBulletItems.push("巧克力碎片多め (2倍 - 免費)");
+                customSentencePhrases.push("チョコチップ多め");
+                customRomajiPhrases.push("chokochippu ōme");
+            } else if (cc === "3x") {
+                customBulletItems.push("巧克力碎片3倍 (免費)");
+                customSentencePhrases.push("チョコチップ3倍");
+                customRomajiPhrases.push("chokochippu san-bai");
+            } else if (cc === "Add") {
+                customBulletItems.push("巧克力碎片 (通常量)");
+                customSentencePhrases.push("チョコチップ通常");
+                customRomajiPhrases.push("chokochippu tsūjō");
+            }
+        } else {
+            // Paid addition (+55 yen)
+            if (cc === "Add") {
+                customBulletItems.push("巧克力碎片追加 (+55円)");
+                customSentencePhrases.push("チョコチップ追加");
+                customRomajiPhrases.push("chokochippu tsuika");
+                extraFee += 55;
+            } else if (cc === "Extra") {
+                customBulletItems.push("巧克力碎片追加、多め (2倍 - +55円)");
+                customSentencePhrases.push("チョコチップ追加、チョコチップ多め");
+                customRomajiPhrases.push("chokochippu tsuika, chokochippu ōme");
+                extraFee += 55;
+            } else if (cc === "3x") {
+                customBulletItems.push("巧克力碎片追加、3倍 (+55円)");
+                customSentencePhrases.push("チョコチップ追加、チョコチップ3倍");
+                customRomajiPhrases.push("chokochippu tsuika, chokochippu san-bai");
+                extraFee += 55;
+            }
+    }
+
+    // Tea Latte Specials Customization
+    if (builderState.allMilk) {
+        customBulletItems.push("オールミルクに変更 (全鮮奶 - 免費)");
+        customSentencePhrases.push("オールミルクに変更");
+        customRomajiPhrases.push("ōrumiruku ni henkō");
+    }
+    if (builderState.teaBag) {
+        customBulletItems.push("ティーバッグ追加 (追加茶包 - +55円)");
+        customSentencePhrases.push("ティーバッグ追加");
+        customRomajiPhrases.push("tībaggu tsuika");
         extraFee += 55;
     }
 
