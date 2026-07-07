@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本星巴克點餐客製化小助手 | Starbucks Japan Customizer</title>
+    <meta name="description" content="專為華人旅客設計的日本星巴克客製化點餐對照圖卡與日文句子產生器。輕鬆調整牛奶、甜度、冰塊與配料，一鍵生成日文小抄秀給店員，旅日點餐零障礙！">
+    <meta name="keywords" content="日本星巴克, 星巴克客製化, 星巴克日文, 星巴克點餐, 日本旅遊, 糖漿, 換牛奶, 去冰, 羅馬拼音">
+    
+    <!-- Google Fonts: Outfit (English UI) & Noto Sans TC / JP for bilingual text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Grain Overlay for rich organic texture -->
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="#" class="header-logo">
+                <span class="logo-icon">☕</span>
+                <div class="logo-text">
+                    <span class="logo-title">星客製</span>
+                    <span class="logo-subtitle">STARBUCKS JAPAN</span>
+                </div>
+            </a>
+            <nav class="nav-menu">
+                <a href="#builder-section" class="nav-link">客製產生器</a>
+                <a href="#cheat-sheets-section" class="nav-link">對照圖卡</a>
+                <a href="#phrases-section" class="nav-link">情境會話</a>
+                <a href="#favorites-section" class="nav-link flex-align">
+                    我的常用
+                    <span class="fav-count-badge" id="favCount">0</span>
+                </a>
+            </nav>
+            <button class="mobile-nav-toggle" aria-label="Toggle Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer">
+        <nav class="mobile-nav-menu">
+            <a href="#builder-section" class="mobile-nav-link">🎛️ 客製產生器</a>
+            <a href="#cheat-sheets-section" class="mobile-nav-link">📇 分類對照圖卡</a>
+            <a href="#phrases-section" class="mobile-nav-link">🗣️ 情境實用會話</a>
+            <a href="#favorites-section" class="mobile-nav-link">💖 我的常用清單</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="hero-tag">JAPAN TRAVEL HELPER</span>
+                <h1 class="hero-title">輕鬆客製您的<br><span class="highlight">日本星巴克</span>專屬飲品</h1>
+                <p class="hero-subtitle">
+                    無論是想換燕麥奶、減糖、去冰加厚牛奶，還是多加焦糖醬，只需動手點選，即可生成日文貼紙小抄。一鍵放大秀給店員，點餐優雅又自信！
+                </p>
+                <div class="hero-buttons">
+                    <a href="#builder-section" class="btn-primary">開始客製飲品</a>
+                    <a href="#cheat-sheets-section" class="btn-outline">瀏覽分類圖卡</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- SVG Stylized Coffee Cup Decoration -->
+                <div class="floating-cup-wrapper">
+                    <svg class="floating-cup" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Cup Body -->
+                        <path d="M55 40 L65 160 Q67 175 80 175 L120 175 Q133 175 135 160 L145 40 Z" fill="#FDFBF7" stroke="#00704A" stroke-width="6"/>
+                        <!-- Sleeve -->
+                        <path d="M58 80 L61 125 C75 130 125 130 139 125 L142 80 C125 75 75 75 58 80 Z" fill="#D4B28C" stroke="#B8946C" stroke-width="2"/>
+                        <!-- Logo on sleeve -->
+                        <circle cx="100" cy="102" r="16" fill="#00704A"/>
+                        <circle cx="100" cy="102" r="13" fill="none" stroke="#FDFBF7" stroke-width="1.5"/>
+                        <!-- Siren silhouette simplified -->
+                        <path d="M96 95 Q100 92 104 95 Q100 106 96 95 Z M100 97 L100 112 M94 102 C96 106 104 106 106 102" stroke="#FDFBF7" stroke-width="1.5" stroke-linecap="round"/>
+                        <!-- Lid -->
+                        <path d="M50 40 L150 40 L145 28 C140 25 60 25 55 28 Z" fill="#FFFFFF" stroke="#00704A" stroke-width="4"/>
+                        <rect x="90" y="20" width="20" height="8" rx="2" fill="#FFFFFF" stroke="#00704A" stroke-width="3"/>
+                        <!-- Green Straw -->
+                        <line x1="100" y1="20" x2="100" y2="5" stroke="#00704A" stroke-width="8" stroke-linecap="round"/>
+                        <!-- Vapor lines -->
+                        <path class="vapor line-1" d="M75 5 Q70 -5 75 -15" stroke="#E3DCD2" stroke-width="3" stroke-linecap="round"/>
+                        <path class="vapor line-2" d="M100 5 Q95 -10 100 -20" stroke="#E3DCD2" stroke-width="3" stroke-linecap="round"/>
+                        <path class="vapor line-3" d="M125 5 Q120 -5 125 -15" stroke="#E3DCD2" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Builder Section -->
+    <section class="section-container" id="builder-section">
+        <div class="section-header">
+            <span class="section-tag">CUSTOM ENGINE</span>
+            <h2 class="section-title">客製貼紙產生器</h2>
+            <p class="section-desc">選擇您想要的飲品基底與客製化細節，右側（或下方）會即時生成日文點餐卡片。</p>
+        </div>
+
+        <div class="builder-grid">
+            <!-- Left Panel: Selector Options -->
+            <div class="selector-panel card-glass">
+                <h3 class="panel-section-title">💡 基礎設定</h3>
+                
+                <!-- Drink Name Input -->
+                <div class="control-group">
+                    <label class="control-label">飲品基本名稱 (可輸入中文、英文或直接日文)</label>
+                    <div class="input-with-suggestions">
+                        <input type="text" id="drinkInput" class="form-input" placeholder="例如：拿鐵 / Latte / カフェラテ" value="拿鐵">
+                        <div class="suggestions-tags">
+                            <span class="suggestion-tag" data-zh="拿鐵" data-ja="カフェ ラテ" data-en="Cafe Latte">拿鐵 (ラテ)</span>
+                            <span class="suggestion-tag" data-zh="美式咖啡" data-ja="アメリカーノ" data-en="Americano">美式 (アメリカーノ)</span>
+                            <span class="suggestion-tag" data-zh="焦糖瑪奇朵" data-ja="キャラメル マキアート" data-en="Caramel Macchiato">焦糖瑪奇朵</span>
+                            <span class="suggestion-tag" data-zh="抹茶奶油星冰樂" data-ja="抹茶 クリーム フラペチーノ" data-en="Matcha Cream Frappuccino">抹茶星冰樂</span>
+                            <span class="suggestion-tag" data-zh="每日精選咖啡" data-ja="ドリップ コーヒー" data-en="Drip Coffee">每日精選</span>
+                            <span class="suggestion-tag" data-zh="紅茶拿鐵" data-ja="ティー ラテ" data-en="Tea Latte">紅茶拿鐵</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Size & Temperature Row -->
+                <div class="control-row">
+                    <div class="control-group">
+                        <label class="control-label">尺寸 (Size)</label>
+                        <div class="option-grid grid-4">
+                            <input type="radio" name="size" id="size-short" value="Short" class="radio-pill">
+                            <label for="size-short" class="pill-label">
+                                <span class="label-main">Short</span>
+                                <span class="label-sub">ショート 240ml</span>
+                            </label>
+
+                            <input type="radio" name="size" id="size-tall" value="Tall" class="radio-pill" checked>
+                            <label for="size-tall" class="pill-label">
+                                <span class="label-main">Tall</span>
+                                <span class="label-sub">トール 350ml</span>
+                            </label>
+
+                            <input type="radio" name="size" id="size-grande" value="Grande" class="radio-pill">
+                            <label for="size-grande" class="pill-label">
+                                <span class="label-main">Grande</span>
+                                <span class="label-sub">グランデ 470ml</span>
+                            </label>
+
+                            <input type="radio" name="size" id="size-venti" value="Venti" class="radio-pill">
+                            <label for="size-venti" class="pill-label">
+                                <span class="label-main">Venti</span>
+                                <span class="label-sub">ベンティ 590ml</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-row">
+                    <div class="control-group">
+                        <label class="control-label">溫度 (Temp)</label>
+                        <div class="option-grid grid-2">
+                            <input type="radio" name="temp" id="temp-hot" value="Hot" class="radio-pill">
+                            <label for="temp-hot" class="pill-label hot-theme">
+                                <span class="label-main">🔥 Hot</span>
+                                <span class="label-sub">ホット</span>
+                            </label>
+
+                            <input type="radio" name="temp" id="temp-iced" value="Iced" class="radio-pill" checked>
+                            <label for="temp-iced" class="pill-label iced-theme">
+                                <span class="label-main">❄️ Iced</span>
+                                <span class="label-sub">アイス</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">🥛 牛奶更換 (Milk)</h3>
+                <div class="control-group">
+                    <div class="option-grid grid-3">
+                        <input type="radio" name="milk" id="milk-standard" value="Standard" class="radio-pill" checked>
+                        <label for="milk-standard" class="pill-label">
+                            <span class="label-main">標準牛乳</span>
+                            <span class="label-sub">通常ミルク (免費)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-lowfat" value="LowFat" class="radio-pill">
+                        <label for="milk-lowfat" class="pill-label">
+                            <span class="label-main">低脂乳</span>
+                            <span class="label-sub">低脂肪タイプ (免費)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-nonfat" value="NonFat" class="radio-pill">
+                        <label for="milk-nonfat" class="pill-label">
+                            <span class="label-main">無脂乳</span>
+                            <span class="label-sub">無脂肪乳 (免費)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-soy" value="Soy" class="radio-pill">
+                        <label for="milk-soy" class="pill-label fee-badge">
+                            <span class="label-main">豆漿</span>
+                            <span class="label-sub">豆乳 (+55円)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-almond" value="Almond" class="radio-pill">
+                        <label for="milk-almond" class="pill-label fee-badge">
+                            <span class="label-main">杏仁奶</span>
+                            <span class="label-sub">アーモンド (+55円)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-oat" value="Oat" class="radio-pill">
+                        <label for="milk-oat" class="pill-label fee-badge">
+                            <span class="label-main">燕麥奶</span>
+                            <span class="label-sub">オーツミルク (+55円)</span>
+                        </label>
+
+                        <input type="radio" name="milk" id="milk-breve" value="Breve" class="radio-pill">
+                        <label for="milk-breve" class="pill-label fee-badge">
+                            <span class="label-main">特濃布雷貝</span>
+                            <span class="label-sub">ブレベミルク (+55円)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">🧊 冰塊調整 (Ice)</h3>
+                <div class="control-group">
+                    <div class="option-grid grid-4" id="ice-options-container">
+                        <input type="radio" name="ice" id="ice-regular" value="Regular" class="radio-pill" checked>
+                        <label for="ice-regular" class="pill-label">
+                            <span class="label-main">正常冰</span>
+                            <span class="label-sub">通常 (免費)</span>
+                        </label>
+
+                        <input type="radio" name="ice" id="ice-less" value="Less" class="radio-pill">
+                        <label for="ice-less" class="pill-label">
+                            <span class="label-main">少冰</span>
+                            <span class="label-sub">氷少なめ (免費)</span>
+                        </label>
+
+                        <input type="radio" name="ice" id="ice-none" value="None" class="radio-pill">
+                        <label for="ice-none" class="pill-label">
+                            <span class="label-main">去冰</span>
+                            <span class="label-sub">氷なし (免費)</span>
+                        </label>
+
+                        <input type="radio" name="ice" id="ice-extra" value="Extra" class="radio-pill">
+                        <label for="ice-extra" class="pill-label">
+                            <span class="label-main">多冰</span>
+                            <span class="label-sub">氷多め (免費)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- Nested Sub-option for Less/No Ice -->
+                    <div class="nested-option" id="ice-milk-compensate-wrapper">
+                        <span class="nested-title">👉 少冰/去冰時液量調整：</span>
+                        <div class="option-grid grid-2">
+                            <input type="radio" name="iceMilk" id="ice-milk-no" value="None" class="radio-pill" checked>
+                            <label for="ice-milk-no" class="pill-label small-pill">
+                                <span class="label-main">不額外加滿</span>
+                                <span class="label-sub">通常量</span>
+                            </label>
+
+                            <input type="radio" name="iceMilk" id="ice-milk-yes" value="ExtraMilk" class="radio-pill">
+                            <label for="ice-milk-yes" class="pill-label small-pill">
+                                <span class="label-main">牛奶加多 (免費)</span>
+                                <span class="label-sub">ミルク多め</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">☕ 濃縮咖啡 (Espresso)</h3>
+                <div class="control-row">
+                    <!-- Espresso Shot Additions -->
+                    <div class="control-group">
+                        <label class="control-label">特濃濃縮咖啡份量</label>
+                        <div class="option-grid grid-3">
+                            <input type="radio" name="shot" id="shot-none" value="None" class="radio-pill" checked>
+                            <label for="shot-none" class="pill-label">
+                                <span class="label-main">無調整</span>
+                                <span class="label-sub">通常</span>
+                            </label>
+
+                            <input type="radio" name="shot" id="shot-add1" value="Add1" class="radio-pill">
+                            <label for="shot-add1" class="pill-label fee-badge">
+                                <span class="label-main">追加1份</span>
+                                <span class="label-sub">1ショット追加 (+55円)</span>
+                            </label>
+
+                            <input type="radio" name="shot" id="shot-add2" value="Add2" class="radio-pill">
+                            <label for="shot-add2" class="pill-label fee-badge">
+                                <span class="label-main">追加2份</span>
+                                <span class="label-sub">2ショット追加 (+110円)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-row">
+                    <!-- Espresso Beans Adjustments -->
+                    <div class="control-group">
+                        <label class="control-label">咖啡豆/萃取調整</label>
+                        <div class="option-grid grid-3">
+                            <input type="checkbox" name="espressoType" id="esp-decaf" value="Decaf" class="checkbox-pill">
+                            <label for="esp-decaf" class="pill-label fee-badge">
+                                <span class="label-main">低咖啡因</span>
+                                <span class="label-sub">デカフェ変更 (+55円)</span>
+                            </label>
+
+                            <input type="checkbox" name="espressoType" id="esp-ristretto" value="Ristretto" class="checkbox-pill">
+                            <label for="esp-ristretto" class="pill-label">
+                                <span class="label-main">限制萃取</span>
+                                <span class="label-sub">リストレットに変更 (免費)</span>
+                            </label>
+
+                            <input type="checkbox" name="espressoType" id="esp-blonde" value="Blonde" class="checkbox-pill">
+                            <label for="esp-blonde" class="pill-label">
+                                <span class="label-main">黃金烘焙</span>
+                                <span class="label-sub">ブロンドに変更 (免費)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">🍯 糖漿與甜度 (Syrups)</h3>
+                <div class="control-row">
+                    <div class="control-group">
+                        <label class="control-label">糖漿種類與調整</label>
+                        <div class="syrup-selector-block">
+                            <div class="syrup-row">
+                                <select id="syrupType" class="form-input select-syrup">
+                                    <option value="None" selected>❌ 不加糖漿 / 無特殊更動</option>
+                                    <option value="Caramel">焦糖糖漿 (キャラメル)</option>
+                                    <option value="Vanilla">香草糖漿 (バニラ)</option>
+                                    <option value="Mocha">巧克力摩卡糖漿 (モカ)</option>
+                                    <option value="WhiteMocha">白摩卡糖漿 (ホワイトモカ)</option>
+                                    <option value="Chai">印度香料茶糖漿 (チャイ)</option>
+                                    <option value="Classic">經典糖漿 (クラシック)</option>
+                                </select>
+                                
+                                <select id="syrupAction" class="form-input select-action" disabled>
+                                    <option value="Change" selected>免費變更 (更換原飲料糖漿)</option>
+                                    <option value="Add">追加糖漿 (+55円)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="syrup-amount-block" id="syrupAmountWrapper" style="display:none;">
+                                <label class="control-label subtitle-label">份量調整 (Amount)</label>
+                                <div class="option-grid grid-3">
+                                    <input type="radio" name="syrupAmount" id="syrup-amt-less" value="Less" class="radio-pill">
+                                    <label for="syrup-amt-less" class="pill-label small-pill">
+                                        <span class="label-main">少一點</span>
+                                        <span class="label-sub">少なめ</span>
+                                    </label>
+
+                                    <input type="radio" name="syrupAmount" id="syrup-amt-regular" value="Regular" class="radio-pill" checked>
+                                    <label for="syrup-amt-regular" class="pill-label small-pill">
+                                        <span class="label-main">正常量</span>
+                                        <span class="label-sub">通常</span>
+                                    </label>
+
+                                    <input type="radio" name="syrupAmount" id="syrup-amt-extra" value="Extra" class="radio-pill">
+                                    <label for="syrup-amt-extra" class="pill-label small-pill">
+                                        <span class="label-main">多一點</span>
+                                        <span class="label-sub">多め (免費)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">🧁 鮮奶油與醬料 (Whipped & Drizzles)</h3>
+                
+                <!-- Whipped Cream Options -->
+                <div class="control-group">
+                    <label class="control-label">鮮奶油 (Whipped Cream)</label>
+                    <div class="option-grid grid-4">
+                        <input type="radio" name="whip" id="whip-none" value="None" class="radio-pill" checked>
+                        <label for="whip-none" class="pill-label">
+                            <span class="label-main">無/不變更</span>
+                            <span class="label-sub">通常</span>
+                        </label>
+
+                        <input type="radio" name="whip" id="whip-less" value="Less" class="radio-pill">
+                        <label for="whip-less" class="pill-label">
+                            <span class="label-main">鮮奶油少</span>
+                            <span class="label-sub">少なめ (免費)</span>
+                        </label>
+
+                        <input type="radio" name="whip" id="whip-extra" value="Extra" class="radio-pill">
+                        <label for="whip-extra" class="pill-label">
+                            <span class="label-main">鮮奶油多</span>
+                            <span class="label-sub">多め (免費)</span>
+                        </label>
+
+                        <input type="radio" name="whip" id="whip-add" value="Add" class="radio-pill">
+                        <label for="whip-add" class="pill-label fee-badge">
+                            <span class="label-main">追加奶油</span>
+                            <span class="label-sub">追加 (+55円)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Drizzles Options -->
+                <div class="control-row">
+                    <div class="control-group">
+                        <label class="control-label">淋醬更動 (免費)</label>
+                        <div class="option-grid grid-2">
+                            <!-- Caramel Drizzle -->
+                            <div class="toggle-sub-block">
+                                <input type="checkbox" name="drizzleCaramel" id="driz-caramel" class="checkbox-pill">
+                                <label for="driz-caramel" class="pill-label flex-row">
+                                    <span class="label-main">焦糖淋醬追加</span>
+                                    <span class="label-sub">キャラメルソース追加</span>
+                                </label>
+                                <div class="nested-amount" id="driz-caramel-amt-wrapper" style="display:none;">
+                                    <input type="radio" name="drizCaramelAmt" id="dc-less" value="Less">
+                                    <label for="dc-less">少 (少なめ)</label>
+                                    <input type="radio" name="drizCaramelAmt" id="dc-normal" value="Regular" checked>
+                                    <label for="dc-normal">正常</label>
+                                    <input type="radio" name="drizCaramelAmt" id="dc-extra" value="Extra">
+                                    <label for="dc-extra">多 (多め)</label>
+                                </div>
+                            </div>
+
+                            <!-- Chocolate Drizzle -->
+                            <div class="toggle-sub-block">
+                                <input type="checkbox" name="drizzleChocolate" id="driz-chocolate" class="checkbox-pill">
+                                <label for="driz-chocolate" class="pill-label flex-row">
+                                    <span class="label-main">巧克力醬追加</span>
+                                    <span class="label-sub">チョコレートソース追加</span>
+                                </label>
+                                <div class="nested-amount" id="driz-chocolate-amt-wrapper" style="display:none;">
+                                    <input type="radio" name="drizChocAmt" id="dh-less" value="Less">
+                                    <label for="dh-less">少 (少なめ)</label>
+                                    <input type="radio" name="drizChocAmt" id="dh-normal" value="Regular" checked>
+                                    <label for="dh-normal">正常</label>
+                                    <input type="radio" name="drizChocAmt" id="dh-extra" value="Extra">
+                                    <label for="dh-extra">多 (多め)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="panel-section-title spacing-top">🍫 配料與粉類 (Additions & Powders)</h3>
+                
+                <!-- Powder and chip inputs -->
+                <div class="control-group">
+                    <div class="checkbox-list-grid">
+                        <label class="checkbox-custom-item">
+                            <input type="checkbox" id="add-honey" value="Honey">
+                            <span class="checkmark"></span>
+                            <div class="checkbox-text">
+                                <span class="label-main">追加蜂蜜 (免費)</span>
+                                <span class="label-sub">ハチミツ追加</span>
+                            </div>
+                        </label>
+
+                        <label class="checkbox-custom-item">
+                            <input type="checkbox" id="add-cinnamon" value="Cinnamon">
+                            <span class="checkmark"></span>
+                            <div class="checkbox-text">
+                                <span class="label-main">追加肉桂粉 (免費)</span>
+                                <span class="label-sub">シナモンパウダー追加</span>
+                            </div>
+                        </label>
+
+                        <label class="checkbox-custom-item">
+                            <input type="checkbox" id="add-cocoa" value="Cocoa">
+                            <span class="checkmark"></span>
+                            <div class="checkbox-text">
+                                <span class="label-main">追加可可粉 (免費)</span>
+                                <span class="label-sub">ココアパウダー追加</span>
+                            </div>
+                        </label>
+
+                        <label class="checkbox-custom-item">
+                            <input type="checkbox" id="add-chips" value="Chips">
+                            <span class="checkmark"></span>
+                            <div class="checkbox-text">
+                                <span class="label-main">追加巧克力碎粒 (+55円)</span>
+                                <span class="label-sub">チョコチップ追加</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Custom Note/Comment -->
+                <div class="control-group spacing-top-sm">
+                    <label class="control-label">備註 (例如：去蓋、需要杯套，會自動加到句子中)</label>
+                    <div class="option-grid grid-3">
+                        <input type="checkbox" id="note-nolid" value="NoLid" class="checkbox-pill">
+                        <label for="note-nolid" class="pill-label">
+                            <span class="label-main">不要杯蓋</span>
+                            <span class="label-sub">蓋なし</span>
+                        </label>
+
+                        <input type="checkbox" id="note-sleeve" value="Sleeve" class="checkbox-pill">
+                        <label for="note-sleeve" class="pill-label">
+                            <span class="label-main">需要杯套</span>
+                            <span class="label-sub">スリーブ追加</span>
+                        </label>
+
+                        <input type="checkbox" id="note-togo" value="ToGo" class="checkbox-pill" checked>
+                        <label for="note-togo" class="pill-label">
+                            <span class="label-main">外帶</span>
+                            <span class="label-sub">持ち帰り</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Order Sticker & Generator -->
+            <div class="sticker-sticky-wrapper">
+                <div class="sticker-panel card-glass">
+                    <!-- Dynamic Coffee Cup Preview -->
+                    <div class="sticker-header-actions">
+                        <span class="sticker-badge">REAL-TIME PREVIEW</span>
+                        <button class="btn-icon-text" id="reset-builder-btn">
+                            <span>🔄 重設</span>
+                        </button>
+                    </div>
+
+                    <!-- Starbucks Cup Sticker Style Container -->
+                    <div class="starbucks-sticker" id="starbucksStickerElement">
+                        <div class="sticker-top-decoration">
+                            <div class="thermal-dots"></div>
+                            <span class="sticker-order-num">CUSTOM-128</span>
+                        </div>
+                        
+                        <div class="sticker-content">
+                            <!-- Drink Header Name -->
+                            <div class="sticker-drink-header">
+                                <span class="sticker-drink-name-zh" id="stickerZhName">拿鐵</span>
+                                <span class="sticker-drink-name-ja" id="stickerJaName">トール カフェラテ (アイス)</span>
+                            </div>
+                            
+                            <!-- Custom Items List -->
+                            <div class="sticker-divider"></div>
+                            <ul class="sticker-items-list" id="stickerCustomizationList">
+                                <li>通常ミルク</li>
+                                <li>通常の氷</li>
+                            </ul>
+                            <div class="sticker-divider"></div>
+                            
+                            <!-- Sentence Block -->
+                            <div class="sticker-sentence-block">
+                                <span class="sentence-title">🇯🇵 點餐完整日文：</span>
+                                <p class="sentence-text" id="stickerJapaneseSentence">トールサイズのカフェラテをアイスでお願いします。</p>
+                                <p class="sentence-romaji" id="stickerRomajiSentence">Tōru saizu no kaferate o aisu de onegaishimasu.</p>
+                            </div>
+                        </div>
+
+                        <!-- Barcode Area -->
+                        <div class="sticker-footer">
+                            <div class="barcode">
+                                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="price-indicator" id="stickerEstimatedPrice">估計追加費用: +0円</div>
+                        </div>
+                    </div>
+
+                    <!-- Sticker Action Buttons -->
+                    <div class="sticker-actions">
+                        <button class="btn-primary flex-align-center" id="show-to-barista-btn">
+                            <span>👀 秀給店員看模式</span>
+                        </button>
+                        
+                        <div class="action-btn-row">
+                            <button class="btn-outline flex-align-center" id="copy-japanese-btn">
+                                <span>📋 複製日文句子</span>
+                            </button>
+                            <button class="btn-outline flex-align-center" id="save-drink-btn">
+                                <span>💖 儲存至常用</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Favorites List Section -->
+    <section class="section-container" id="favorites-section">
+        <div class="section-header">
+            <span class="section-tag">MY DRINKS</span>
+            <h2 class="section-title">我的常用清單</h2>
+            <p class="section-desc">已儲存的客製化飲品，將自動儲存在您的手機瀏覽器中，方便出國時隨時調出點餐。</p>
+        </div>
+        
+        <!-- Empty State -->
+        <div class="favorites-empty card-glass" id="favoritesEmptyState">
+            <span class="empty-icon">☕</span>
+            <h3>目前還沒有儲存的飲品</h3>
+            <p>在上方客製貼紙產生器中調整好飲料後，點選「儲存至常用」按鈕吧！</p>
+        </div>
+
+        <!-- Favorites Grid -->
+        <div class="favorites-grid" id="favoritesGrid" style="display:none;">
+            <!-- Dynamic elements will be inserted here -->
+        </div>
+    </section>
+
+    <!-- Categorized Cheat Sheets Section -->
+    <section class="section-container" id="cheat-sheets-section">
+        <div class="section-header">
+            <span class="section-tag">REFERENCE CARDS</span>
+            <h2 class="section-title">分類對照圖卡</h2>
+            <p class="section-desc">快速查找日本星巴克的所有客製化單字與價格，點擊卡片即可複製日文。</p>
+        </div>
+
+        <!-- Cheat Sheet Navigation Tabs -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="tab-milk">🥛 牛奶牛奶</button>
+            <button class="tab-btn" data-tab="tab-ice">🧊 冰量與溫度</button>
+            <button class="tab-btn" data-tab="tab-syrup">🍯 糖漿口味</button>
+            <button class="tab-btn" data-tab="tab-whip">🧁 鮮奶油/醬</button>
+            <button class="tab-btn" data-tab="tab-powder">🍫 粉類與配料</button>
+            <button class="tab-btn" data-tab="tab-sizes">📐 尺寸容量</button>
+        </div>
+
+        <!-- Tab Content Wrapper -->
+        <div class="tab-content-wrapper">
+            <!-- Milk Tab -->
+            <div class="tab-content active" id="tab-milk">
+                <div class="cheat-cards-grid" id="grid-milk-cards">
+                    <!-- Dynamic milk cards from main.js -->
+                </div>
+            </div>
+
+            <!-- Ice & Temp Tab -->
+            <div class="tab-content" id="tab-ice">
+                <div class="cheat-cards-grid" id="grid-ice-cards">
+                    <!-- Dynamic ice cards -->
+                </div>
+            </div>
+
+            <!-- Syrup Tab -->
+            <div class="tab-content" id="tab-syrup">
+                <div class="cheat-cards-grid" id="grid-syrup-cards">
+                    <!-- Dynamic syrup cards -->
+                </div>
+            </div>
+
+            <!-- Whip & Sauce Tab -->
+            <div class="tab-content" id="tab-whip">
+                <div class="cheat-cards-grid" id="grid-whip-cards">
+                    <!-- Dynamic whip/sauce cards -->
+                </div>
+            </div>
+
+            <!-- Powder Tab -->
+            <div class="tab-content" id="tab-powder">
+                <div class="cheat-cards-grid" id="grid-powder-cards">
+                    <!-- Dynamic powder cards -->
+                </div>
+            </div>
+
+            <!-- Sizes Tab -->
+            <div class="tab-content" id="tab-sizes">
+                <div class="cheat-cards-grid" id="grid-size-cards">
+                    <!-- Dynamic size cards -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phrases / Conversation Scenarios Section -->
+    <section class="section-container" id="phrases-section">
+        <div class="section-header">
+            <span class="section-tag">CONVERSATION SCENARIOS</span>
+            <h2 class="section-title">情境實用會話</h2>
+            <p class="section-desc">彙整日本星巴克點餐時店員常用的提問與回答範例，旅日點餐不再手忙腳亂。</p>
+        </div>
+
+        <div class="phrases-wrapper">
+            <div class="phrases-grid">
+                <!-- Card 1: Standard Ordering Flow -->
+                <div class="phrase-card card-glass">
+                    <div class="phrase-card-badge bg-green">點餐流程</div>
+                    <h3>🙋 如何開始點餐？</h3>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label user-label">客：您好，我想要點這個。</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">すみません、これをお願いします。</p>
+                            <p class="ro-txt">Sumimasen, kore o onegaishimasu.</p>
+                        </div>
+                    </div>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label staff-label">店：好的，冷飲還是熱飲？</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">ホットとアイス、どちらにされますか？</p>
+                            <p class="ro-txt">Hotto to aisu, dochira ni saremasu ka?</p>
+                        </div>
+                    </div>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label user-label">客：冰的，大杯。</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">アイスのトールサイズで。</p>
+                            <p class="ro-txt">Aisu no tōru saizu de.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Take out or Eat in -->
+                <div class="phrase-card card-glass">
+                    <div class="phrase-card-badge bg-gold">內用或外帶</div>
+                    <h3>🏪 內用還是外帶？ (稅率不同)</h3>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label staff-label">店：要在店內享用還是帶走？</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">店内で召し上がりますか？お持ち帰りですか？</p>
+                            <p class="ro-txt">Tennai de meshigarimasu ka? O-mochikaeri desu ka?</p>
+                        </div>
+                    </div>
+                    <div class="phrase-qa-item flex-row-qa">
+                        <div class="qa-box">
+                            <div class="qa-label user-label">客：外帶 (8%稅)</div>
+                            <p class="ja-txt">持ち帰りで。</p>
+                            <p class="ro-txt">Mochikaeri de.</p>
+                        </div>
+                        <div class="qa-box">
+                            <div class="qa-label user-label">客：內用 (10%稅)</div>
+                            <p class="ja-txt">店内で。</p>
+                            <p class="ro-txt">Tennai de.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Common Requests -->
+                <div class="phrase-card card-glass">
+                    <div class="phrase-card-badge bg-charcoal">實用小需求</div>
+                    <h3>💡 貼心小幫手</h3>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label user-label">客：可以給我一個防燙杯套嗎？</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">スリーブをいただけますか？</p>
+                            <p class="ro-txt">Surību o itadakemasu ka?</p>
+                        </div>
+                    </div>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label user-label">客：可以給我一個分裝空杯嗎？</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">（分ける用の）空のカップをいただけますか？</p>
+                            <p class="ro-txt">Kara no kappu o itadakemasu ka?</p>
+                        </div>
+                    </div>
+                    <div class="phrase-qa-item">
+                        <div class="qa-label user-label">客：請不要幫我蓋蓋子。(有鮮奶油時)</div>
+                        <div class="qa-content">
+                            <p class="ja-txt">蓋（ふた）なしでお願いします。</p>
+                            <p class="ro-txt">Futa nashi de onegaishimasu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="logo-icon font-large">☕</span>
+                    <span class="brand-title">星客製</span>
+                    <p class="brand-subtitle">Japan Starbucks Customizer</p>
+                </div>
+                <div class="footer-notice">
+                    <p>💡 <b>溫馨提醒：</b></p>
+                    <p>日本星巴克客製化的收費標準，植物奶、濃縮咖啡追加、巧克力碎片、糖漿追加等，外帶稅率（8%）為 54 日圓，內用稅率（10%）為 55 日圓。本工具以內用 55 日圓為概算基準，實際金額以結帳時發票為準。</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 星客製. 網頁設計由 Antigravity 團隊提供。為您量身打造的日本星巴克點餐神器。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fullscreen "Show to Barista" Modal -->
+    <div class="modal-overlay" id="baristaModal">
+        <div class="modal-card-wrapper">
+            <button class="modal-close-btn" id="closeBaristaModalBtn" aria-label="Close modal">✕</button>
+            <div class="barista-sticker-container">
+                <div class="barista-sticker-title">
+                    <span>すみません、以下のカスタマイズをお願いします。</span>
+                    <small>(不好意思，請幫我做以下客製化調整。)</small>
+                </div>
+                <div class="barista-sticker" id="baristaStickerElement">
+                    <!-- Dynamic sticker with large font will be duplicated here by JS -->
+                </div>
+                <div class="barista-helper-tips">
+                    <p>💡 手機拿給店員看即可點餐 / Please show this screen to the barista.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JS script -->
+    <script src="main.js"></script>
+</body>
+</html>
